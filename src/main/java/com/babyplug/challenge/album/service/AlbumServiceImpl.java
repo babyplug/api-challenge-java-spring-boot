@@ -56,6 +56,7 @@ public class AlbumServiceImpl implements AlbumService{
 
         Album dto = new Album();
         dto.setCreatedBy(user.getId());
+        dto.setDeleted(false);
 
         dto.setName(form.getName());
 
