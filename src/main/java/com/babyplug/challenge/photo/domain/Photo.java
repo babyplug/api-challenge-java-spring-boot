@@ -17,6 +17,8 @@ public class Photo extends BaseEntity {
     private Long id;
 
     private String description;
+
+    @Column(name = "filename")
     private String fileName;
     private Double views;
     private Boolean isPublished;
