@@ -23,7 +23,7 @@ public class Photo extends BaseEntity {
     private Long authorId;
 
     @OneToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "authorId", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "authorId", referencedColumnName = "id", insertable = false, updatable = false)
     private Author author;
 
     @JsonIgnore
