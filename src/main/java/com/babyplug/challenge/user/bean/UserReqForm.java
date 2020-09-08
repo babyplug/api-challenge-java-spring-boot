@@ -1,44 +1,20 @@
-package com.babyplug.challenge.user.domain;
+package com.babyplug.challenge.user.bean;
 
-import com.babyplug.challenge.core.BaseEntity;
-import com.babyplug.challenge.user.bean.EUserStatus;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.babyplug.challenge.user.domain.EUserType;
 
-import javax.persistence.*;
+import java.io.Serializable;
 
-@Entity
-public class User extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class UserReqForm implements Serializable {
     private String firstName;
     private String lastName;
     private String displayName;
     private Long age;
 
     private String username;
-    @JsonIgnore
     private String password;
 
-    @Enumerated(EnumType.STRING)
     private EUserType userType;
-    @Enumerated(EnumType.STRING)
     private EUserStatus status;
-
-    @JsonIgnore
-    private Boolean deleted;
-
-    private Long createdBy;
-    private Long updatedBy;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -86,30 +62,6 @@ public class User extends BaseEntity {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
-    }
-
-    public Long getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(Long createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public Long getUpdatedBy() {
-        return updatedBy;
-    }
-
-    public void setUpdatedBy(Long updatedBy) {
-        this.updatedBy = updatedBy;
     }
 
     public EUserType getUserType() {
