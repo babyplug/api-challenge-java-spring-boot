@@ -1,0 +1,67 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: api-challenge-service
+  profiles:
+    active: prod
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://${db.host}:${db.port}/${db.name}?useUnicode=true&characterEncoding=UTF-8&ussSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useMysqlMetadata=true
+    username: ${db.username}
+    password: ${db.password}
+    tomcat:
+      max-active: 20
+      initial-size: 15
+      max-wait: 20000
+      max-idle: 5
+      min-idle: 3
+      default-auto-commit: true
+    hikari:
+      connectionTimeout: 30000
+      idleTimeout: 20000
+      maxLifetime: 300000
+      maximumPoolSize: 10
+    continue-on-error: false
+  jpa:
+    show-sql: false
+    hibernate:
+      dialect: com.mysql.cj.jdbc.Driver
+    properties:
+      hibernate:
+        connection:
+          autoReconnect: true
+          autoReconnectForPools: true
+          is-connection-validation-required: true
+        format_sql: true
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 500MB
+
+flyway:
+  enabled: true
+  baselineOnMigrate: false
+
+db:
+  host: 127.0.0.1
+  port: 3306
+  name: api_challenge_spring
+  username: root
+  password:
+
+server:
+  port: 8080
+  servlet:
+    contextPath: /api
+  tomcat:
+    max-threads: 400
+
+spring-boot:
+  run:
+    skip: true
+
+app:
+  image-profile: /sale-api/profile
+  attachments: /sale-api/attachment
+  LOGS: /sale-api/logs
