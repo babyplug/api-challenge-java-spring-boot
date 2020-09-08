@@ -14,4 +14,7 @@ public class SystemConstant {
     public static final String ATTACHMENTS_URL = "/public/attachments/";
     public static final String PRIVATE_ATTACHMENTS_URL = "/attachments/";
 
+    //Response code constant
+    public static final String PROCESS_SUCCESS = "0000";
+    public static final String PROCESS_ERROR = "E0001";
 }
