@@ -1,0 +1,2 @@
+ALTER TABLE user ADD user_type VARCHAR(50) NULL;
+ALTER TABLE user ADD status VARCHAR(50) NULL;
