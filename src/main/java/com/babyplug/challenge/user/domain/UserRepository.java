@@ -19,4 +19,5 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     Optional<User> findByIdAndDeleted(Long id, boolean deleted);
 
+    List<User> findByUsernameAndDeleted(String username, boolean deleted);
 }
