@@ -65,3 +65,4 @@ app:
   image-profile: /sale-api/profile
   attachments: /sale-api/attachment
   LOGS: /sale-api/logs
+  swagger-ui: false

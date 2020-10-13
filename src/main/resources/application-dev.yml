@@ -64,3 +64,4 @@ spring-boot:
 app:
   image-profile: /sale_api/profile
   attachments: /sale_api/attachment
+  swagger-ui: true
