@@ -58,11 +58,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	    
 	    final String[] AUTH_WHITELIST = {
                 // -- swagger ui
-//				"/users",
-//				"/noti/**",
-				"/report/**",
+				"/album/**", "/author/**", "/photo/**", "/photo-metadata/**",
                 "/v2/api-docs", "/swagger-resources", "/swagger-resources/**", "/configuration/ui",
-                "/configuration/security", "/swagger-ui.html", "/webjars/**" };
+                "/configuration/security", "/swagger-ui.html", "/webjars/**"
+	    };
         http.authorizeRequests().antMatchers(AUTH_WHITELIST).permitAll();
         http.authorizeRequests().antMatchers("/images/**").permitAll();
         http.authorizeRequests().antMatchers("/public/**").permitAll();
