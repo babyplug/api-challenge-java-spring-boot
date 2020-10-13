@@ -52,8 +52,10 @@ public class PhotoMetadataServiceImpl implements PhotoMetadataService {
         User user = authFacade.getAuthentication();
 
         PhotoMetadata dto = new PhotoMetadata();
+        if (user != null) {
+            dto.setCreatedBy(user.getId());
+        }
         dto.setDeleted(false);
-        dto.setCreatedBy(user.getId());
 
         dto.setHeight(form.getHeight());
         dto.setWidth(form.getWidth());
@@ -79,8 +81,9 @@ public class PhotoMetadataServiceImpl implements PhotoMetadataService {
         User user = authFacade.getAuthentication();
 
         PhotoMetadata dto = getPhotoMetadataById(id);
-        dto.setDeleted(false);
-        dto.setCreatedBy(user.getId());
+        if (user != null) {
+            dto.setUpdatedBy(user.getId());
+        }
 
         dto.setHeight(form.getHeight());
         dto.setWidth(form.getWidth());
@@ -96,7 +99,9 @@ public class PhotoMetadataServiceImpl implements PhotoMetadataService {
     public void deletePhotoMetadataById(Long id) throws NotFoundException {
         User user = authFacade.getAuthentication();
         PhotoMetadata dto = getPhotoMetadataById(id);
-        dto.setUpdatedBy(user.getId());
+        if (user != null) {
+            dto.setUpdatedBy(user.getId());
+        }
         dto.setDeleted(true);
         photoMetadataRepository.save(dto);
     }

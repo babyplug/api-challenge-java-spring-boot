@@ -54,7 +54,9 @@ public class AuthorServiceImpl implements AuthorService {
         User user = authFacade.getAuthentication();
 
         Author dto = new Author();
-        dto.setCreatedBy(user.getId());
+        if (user != null) {
+            dto.setCreatedBy(user.getId());
+        }
         dto.setDeleted(false);
 
         dto.setName(form.getName());
@@ -75,7 +77,9 @@ public class AuthorServiceImpl implements AuthorService {
         User user = authFacade.getAuthentication();
 
         Author dto = getAuthorById(id);
-        dto.setCreatedBy(user.getId());
+        if (user != null) {
+            dto.setUpdatedBy(user.getId());
+        }
         dto.setDeleted(false);
 
         dto.setName(form.getName());
@@ -86,7 +90,9 @@ public class AuthorServiceImpl implements AuthorService {
     public void deleteAuthorById(Long id) throws NotFoundException {
         User user = authFacade.getAuthentication();
         Author dto = getAuthorById(id);
-        dto.setUpdatedBy(user.getId());
+        if (user != null) {
+            dto.setUpdatedBy(user.getId());
+        }
         dto.setDeleted(true);
         authorRepository.save(dto);
     }

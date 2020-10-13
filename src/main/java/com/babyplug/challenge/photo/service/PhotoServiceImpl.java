@@ -52,13 +52,15 @@ public class PhotoServiceImpl implements PhotoService {
         User user = authFacade.getAuthentication();
 
         Photo dto = new Photo();
+        if (user != null) {
+            dto.setCreatedBy(user.getId());
+        }
         dto.setDeleted(false);
-        dto.setCreatedBy(user.getId());
 
         dto.setDescription(form.getDescription());
         dto.setFileName(form.getFileName());
         dto.setViews(form.getViews());
-        dto.setPublished(form.getPublished());
+        dto.setIsPublished(form.getPublished());
         dto.setAuthorId(form.getAuthorId());
 
         return photoRepository.save(dto);
@@ -78,12 +80,14 @@ public class PhotoServiceImpl implements PhotoService {
         User user = authFacade.getAuthentication();
 
         Photo dto = getPhotoById(id);
-        dto.setUpdatedBy(user.getId());
+        if (user != null) {
+            dto.setUpdatedBy(user.getId());
+        }
 
         dto.setDescription(form.getDescription());
         dto.setFileName(form.getFileName());
         dto.setViews(form.getViews());
-        dto.setPublished(form.getPublished());
+        dto.setIsPublished(form.getPublished());
         dto.setAuthorId(form.getAuthorId());
 
         return photoRepository.save(dto);
@@ -93,7 +97,9 @@ public class PhotoServiceImpl implements PhotoService {
     public void deletePhotoById(Long id) throws NotFoundException {
         User user = authFacade.getAuthentication();
         Photo dto = getPhotoById(id);
-        dto.setUpdatedBy(user.getId());
+        if (user != null) {
+            dto.setUpdatedBy(user.getId());
+        }
         dto.setDeleted(true);
         photoRepository.save(dto);
     }

@@ -7,6 +7,8 @@ import com.babyplug.challenge.album.domain.AlbumRepository;
 import com.babyplug.challenge.album.utils.AlbumSpecUtils;
 import com.babyplug.challenge.constant.SystemConstant;
 import com.babyplug.challenge.core.exception.NotFoundException;
+import com.babyplug.challenge.photo.domain.Photo;
+import com.babyplug.challenge.photo.service.PhotoService;
 import com.babyplug.challenge.security.configuration.service.AuthenticationFacade;
 import com.babyplug.challenge.user.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,9 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,6 +33,9 @@ public class AlbumServiceImpl implements AlbumService{
 
     @Autowired
     private AuthenticationFacade authFacade;
+
+    @Autowired
+    private PhotoService photoService;
 
     @Override
     public Page<Album> getAllPages(AlbumReqParams params) {
@@ -55,17 +62,26 @@ public class AlbumServiceImpl implements AlbumService{
         User user = authFacade.getAuthentication();
 
         Album dto = new Album();
-        dto.setCreatedBy(user.getId());
+        if (user != null ){
+            dto.setCreatedBy(user.getId());
+        }
         dto.setDeleted(false);
 
         dto.setName(form.getName());
 
-//        if (!CollectionUtils.isEmpty(form.getPhotoList())) {
-//            HashSet<Long> photoSet = new HashSet<>(form.getPhotoList());
-//            for(Long photoId: photoSet){
-//
-//            }
-//        }
+        List<Photo> photoList = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(form.getPhotoList())) {
+            HashSet<Long> photoSet = new HashSet<>(form.getPhotoList());
+            for(Long photoId: photoSet){
+                try {
+                    Photo photo = photoService.getPhotoById(photoId);
+                    photoList.add(photo);
+                } catch (NotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        dto.setPhotoList(photoList);
 
         return albumRepository.save(dto);
     }
@@ -84,25 +100,37 @@ public class AlbumServiceImpl implements AlbumService{
         User user = authFacade.getAuthentication();
 
         Album dto = getAlbumById(id);
-        dto.setUpdatedBy(user.getId());
+        if (user != null ){
+            dto.setUpdatedBy(user.getId());
+        }
 
         dto.setName(form.getName());
 
-//        if (!CollectionUtils.isEmpty(form.getPhotoList())) {
-//            HashSet<Long> photoSet = new HashSet<>(form.getPhotoList());
-//            for(Long photoId: photoSet){
-//
-//            }
-//        }
+        List<Photo> photoList = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(form.getPhotoList())) {
+            HashSet<Long> photoSet = new HashSet<>(form.getPhotoList());
+            for(Long photoId: photoSet){
+                try {
+                    Photo photo = photoService.getPhotoById(photoId);
+                    photoList.add(photo);
+                } catch (NotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        dto.setPhotoList(photoList);
 
-        return dto;
+        return albumRepository.save(dto);
     }
 
     @Override
     public void deleteAlbumById(Long id) throws NotFoundException {
         User user = authFacade.getAuthentication();
         Album dto = getAlbumById(id);
-        dto.setUpdatedBy(user.getId());
+        if (user != null ){
+            dto.setUpdatedBy(user.getId());
+        }
+
         dto.setDeleted(true);
         albumRepository.save(dto);
     }

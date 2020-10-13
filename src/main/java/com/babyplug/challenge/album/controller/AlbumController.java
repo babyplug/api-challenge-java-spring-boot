@@ -30,8 +30,8 @@ public class AlbumController {
     public ResponseEntity<?> createAlbum(@RequestBody AlbumReqForm form) {
         ResponseEntity<?> response = null;
 
-        Album activity = albumService.createAlbum(form);
-        response = ResponseEntity.status(HttpStatus.CREATED).body(activity);
+        Album album = albumService.createAlbum(form);
+        response = ResponseEntity.status(HttpStatus.CREATED).body(album);
 
         return response;
     }
